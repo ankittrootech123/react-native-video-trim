@@ -25,35 +25,37 @@ export interface EditorConfig {
 export async function showEditor(
   videoPath: string,
   config: EditorConfig = {}
-): Promise<void> {
+): Promise<any> {
   const { maxDuration, saveToPhoto = true } = config;
   const outputPath = await VideoTrim.showEditor(videoPath, {
     saveToPhoto,
     maxDuration,
   });
 
-  if (Platform.OS === 'android' && saveToPhoto) {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE!,
-        {
-          title: 'Video Trimmer Camera Access Required',
-          message: 'Grant access to your Camera to write output Video',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        }
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        await VideoTrim.saveVideo(outputPath);
-      } else {
-        VideoTrim.hideDialog();
-        throw new Error('Camera permission denied');
-      }
-    } catch (err) {
-      throw err;
-    }
-  }
+  return outputPath
+
+  // if (Platform.OS === 'android' && saveToPhoto) {
+  //   try {
+  //     const granted = await PermissionsAndroid.request(
+  //       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE!,
+  //       {
+  //         title: 'Video Trimmer Camera Access Required',
+  //         message: 'Grant access to your Camera to write output Video',
+  //         buttonNeutral: 'Ask Me Later',
+  //         buttonNegative: 'Cancel',
+  //         buttonPositive: 'OK',
+  //       }
+  //     );
+  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //       await VideoTrim.saveVideo(outputPath);
+  //     } else {
+  //       VideoTrim.hideDialog();
+  //       throw new Error('Camera permission denied');
+  //     }
+  //   } catch (err) {
+  //     throw err;
+  //   }
+  // }
 }
 
 export function isValidVideo(videoPath: string): Promise<boolean> {
