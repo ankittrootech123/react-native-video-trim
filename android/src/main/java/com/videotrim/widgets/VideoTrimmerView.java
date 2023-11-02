@@ -304,8 +304,6 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
         mRightProgressPos,
         mOnTrimVideoListener);
     }
-
-    return mSourceUri.getPath();
   }
 
   private void seekTo(long msec) {
