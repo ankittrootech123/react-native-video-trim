@@ -291,7 +291,7 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     });
   }
 
-  private void onSaveClicked() {
+  private String onSaveClicked() {
     if (mRightProgressPos - mLeftProgressPos < VideoTrimmerUtil.MIN_SHOOT_DURATION) {
       Toast.makeText(mContext, "Video shorter than 3s, can't proceed", Toast.LENGTH_SHORT).show();
     } else {
@@ -304,6 +304,8 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
         mRightProgressPos,
         mOnTrimVideoListener);
     }
+
+    return mSourceUri.getPath();
   }
 
   private void seekTo(long msec) {
