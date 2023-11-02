@@ -281,7 +281,7 @@ public class VideoTrimModule extends ReactContextBaseJavaModule implements Video
   }
 
   @ReactMethod
-  private void saveVideo(String filePath, Promise promise) {
+  private String saveVideo(String filePath, Promise promise) {
     try {
       StorageUtil.saveVideoToGallery(getReactApplicationContext(), filePath);
     } catch (IOException e) {
@@ -293,5 +293,6 @@ public class VideoTrimModule extends ReactContextBaseJavaModule implements Video
 
     this.hideDialog();
     promise.resolve(null);
+    return filePath;
   }
 }
