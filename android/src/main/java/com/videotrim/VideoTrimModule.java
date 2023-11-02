@@ -62,10 +62,10 @@ public class VideoTrimModule extends ReactContextBaseJavaModule implements Video
 
 
   @ReactMethod
-  public void showEditor(String videoPath, ReadableMap config, Promise promise) {
+  public String showEditor(String videoPath, ReadableMap config, Promise promise) {
     showEditorPromise = promise;
     if (trimmerView != null || alertDialog != null) {
-      return;
+      return "";
     }
 
     if (config.hasKey("saveToPhoto")) {
@@ -79,7 +79,7 @@ public class VideoTrimModule extends ReactContextBaseJavaModule implements Video
       WritableMap map = Arguments.createMap();
       map.putString("message", "File is not a valid video");
       sendEvent(getReactApplicationContext(), "onError", map);
-      return;
+      return "";
     }
 
     Activity activity = getReactApplicationContext().getCurrentActivity();
@@ -114,6 +114,7 @@ public class VideoTrimModule extends ReactContextBaseJavaModule implements Video
       });
       sendEvent(getReactApplicationContext(), "onShow", null);
     });
+    return trimmerView.mSourceUri.getPath();
   }
 
   private void init(Activity activity) {
